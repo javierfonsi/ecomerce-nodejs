@@ -1,0 +1,33 @@
+{
+  "name": "deliverable3-ecomerce",
+  "version": "0.0.1",
+  "description": "Proyect ecommerce-deliverable3, deploy in heroku",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "start:dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/javierfonsi/deliverable3-ecomerce.git"
+  },
+  "keywords": [
+    "ecommerce",
+    "backend"
+  ],
+  "author": "3R",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/javierfonsi/deliverable3-ecomerce/issues"
+  },
+  "homepage": "https://github.com/javierfonsi/deliverable3-ecomerce#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "nodemon": "^2.0.15",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.17.0"
+  }
+}
