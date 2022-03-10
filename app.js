@@ -13,7 +13,9 @@ sequelize
     .then(() => console.log("Database sync"))
     .catch(error => console.log(error))
 
-    const PORT = process.env.PORT || 4001;
+const PORT = process.env.PORT || 4001;
+
+//Verificacion roberto XXXXXXXXXXXXXXXXX
 
 app.listen(PORT, () => {
     console.log("Running server");
