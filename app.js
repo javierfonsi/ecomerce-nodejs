@@ -2,17 +2,11 @@ const express = require('express');
 
 //Routes
 const { usersRouter } = require('./routes/users.routes');
-const {
-  productRouter
-} = require('./routes/products.routes');
+const { productRouter } = require('./routes/products.routes');
 const { cartsRouter } = require('./routes/carts.routes');
-const {
-  productsincartRouter
-} = require('./routes/productsInCart.routes');
-const { ordersRouter } = require('./routes/order.route');
-const {
-  productinordersRouter
-} = require('./routes/productinorder.route');
+const { productsincartRouter } = require('./routes/productsInCart.routes');
+const { ordersRouter } = require('./routes/order.routes');
+const { productinordersRouter } = require('./routes/productinorder.routes');
 
 //Util
 const { sequelize } = require('./utils/database');

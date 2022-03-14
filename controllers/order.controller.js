@@ -1,5 +1,8 @@
 const { Order } = require('../models/order.model');
 
+const { filterObj } = require('../utils/filterObj')
+
+
 exports.getAllOrders = async (req, res) => {
   try {
     const orders = await Order.findAll({
@@ -7,9 +10,9 @@ exports.getAllOrders = async (req, res) => {
     });
 
     if (orders.length === 0) {
-      res.status(200).json({
-        status: 'success',
-        message: 'There are not products created until.'
+      res.status(404).json({
+        status: 'error',
+        message: 'There are not orders created until.'
       });
       return;
     }
@@ -27,14 +30,9 @@ exports.getAllOrders = async (req, res) => {
 exports.createOrder = async (req, res) => {
   try {
     const { totalPrice, userId } = req.body;
-    const order = await Order.create({
-      totalPrice: totalPrice,
-      userId: userId
-    });
 
     if (
-      (!totalPrice || !userId || totalPrice.length === 0,
-      userId.length === 0)
+      !totalPrice || !userId 
     ) {
       res.status(404).json({
         status: 'error',
@@ -43,6 +41,12 @@ exports.createOrder = async (req, res) => {
       });
       return;
     }
+
+    const order = await Order.create({
+      totalPrice: totalPrice,
+      userId: userId
+    });
+    
     res.status(201).json({
       status: 'success',
       data: {
@@ -54,34 +58,33 @@ exports.createOrder = async (req, res) => {
   }
 };
 
-exports.updateOrderPatch = async (req, res) => {
-  try {
-    const { id } = req.params;
+// exports.updateOrderPatch = async (req, res) => {
+//   try {
+//     const { id } = req.params;
 
-    const data = filterObj(
-      req.body,
-      'totalPrice',
-      'userId'
-    ); // { aciotns } | { action, status }
+//     const data = filterObj(
+//       req.body,      
+//       'totalPrice'      
+//     ); // { aciotns } | { action, status }
 
-    const order = await Order.findOne({
-      where: { id: id, status: 'active' }
-    });
+//     const order = await Order.findOne({
+//       where: { id: id, status: 'active' }
+//     });
 
-    if (!order) {
-      res.status(404).json({
-        status: 'error',
-        message: 'Cant update post, invalid ID'
-      });
-      return;
-    }
+//     if (!order) {
+//       res.status(404).json({
+//         status: 'error',
+//         message: 'Cant update post, invalid ID'
+//       });
+//       return;
+//     }
 
-    await order.update({ ...data }); // .update({ action, status })
-    res.status(204).json({ status: 'success' });
-  } catch (error) {
-    console.log(error);
-  }
-};
+//     await order.update({ ...data }); // .update({ action, status })
+//     res.status(204).json({ status: 'success' });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 // Delete post
 exports.deleteOrder = async (req, res) => {
@@ -92,7 +95,7 @@ exports.deleteOrder = async (req, res) => {
       where: { id: id, status: 'active' }
     });
 
-    if (!this.getAllOrder) {
+    if (!order) {
       res.status(404).json({
         status: 'error',
         message: 'Cant delete post, invalid ID'
@@ -100,10 +103,25 @@ exports.deleteOrder = async (req, res) => {
       return;
     }
     // Soft delete
-    await order.update({ status: 'deleted' });
+    await order.update({ status: 'deleted'});
 
-    res.status(204).json({ status: 'success' });
+    res.status(201).json({       
+      status: 'success', 
+      message: 'The order was deleted'
+    });
   } catch (error) {
     console.log(error);
-  }
+  } 
 };
+
+exports.deleteOrderWithOutId = async(req, res) => {
+  try {
+    res.status(404).json({
+      status: 'error',
+      message: 'Put an id valid'
+    })
+    
+  } catch (error) {
+    console.log(error)
+  }
+}
