@@ -1,7 +1,19 @@
 const express= require('express')
+
+//Model
+const { ordersRouter } = require('./routes/order.route')
+const { productinordersRouter } = require('./routes/productinorder.route')
+
+//Util
 const { sequelize } = require('./utils/database')
 
+//Init express
 const app = express()
+
+//Endpoint
+app.use('/api/v1/orders', ordersRouter)
+app.use('/api/v1/productsinorders', productinordersRouter)
+
 
 sequelize
     .authenticate()
