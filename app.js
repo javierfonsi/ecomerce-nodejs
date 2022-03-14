@@ -1,15 +1,27 @@
 const express= require('express');
+
+//Model
 const { productRouter } = require('./routes/products.routes');
 const { usersRouter } = require('./routes/users.routes')
+const { ordersRouter } = require('./routes/order.route')
+const { productinordersRouter } = require('./routes/productinorder.route')
+
+
+//Util
 const { sequelize } = require('./utils/database')
 
-
+//Init express
 const app = express()
 //json 
 app.use(express.json());
 
 app.use('/api/v1/users', usersRouter);
 app.use('/api/v1/products', productRouter)
+
+//Endpoint
+app.use('/api/v1/orders', ordersRouter)
+app.use('/api/v1/productsinorders', productinordersRouter)
+
 
 sequelize
     .authenticate()
