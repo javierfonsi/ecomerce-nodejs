@@ -1,32 +1,36 @@
-const { Productinorder } = require("../models/productinorder.model");
+const {
+  Productinorder
+} = require('../models/productinorder.model');
 
 exports.getAllProductInOrders = async (req, res) => {
   try {
     const productinorders = await Productinorder.findAll({
-      where: { status: "active" },
+      where: { status: 'active' }
     });
 
     if (productinorders.length === 0) {
       res.status(200).json({
-        status: "success",
-        message: "There are not products created until.",
+        status: 'success',
+        message: 'There are not products created until.'
       });
       return;
     }
     res.status(201).json({
-      status: "success",
+      status: 'success',
       data: {
-        productinorders,
-      },
+        productinorders
+      }
     });
   } catch (error) {
     console.log(error);
-  }pro
+  }
+  pro;
 };
 
 exports.createProductInOrder = async (req, res) => {
   try {
-    const { orderId, productId, quantity, price } = req.body;
+    const { orderId, productId, quantity, price } =
+      req.body;
     const productinorder = await Productinorder.create({
       orderId: orderId,
       productId: productId,
@@ -35,19 +39,27 @@ exports.createProductInOrder = async (req, res) => {
     });
 
     if (
-      (!orderId || !productId || !quantity || !price || orderId.length === 0, productId.length === 0, quantity.length === 0, price.length === 0)
+      (!orderId ||
+        !productId ||
+        !quantity ||
+        !price ||
+        orderId.length === 0,
+      productId.length === 0,
+      quantity.length === 0,
+      price.length === 0)
     ) {
       res.status(404).json({
-        status: "error",
-        message: "Verify the properties names and their content",
+        status: 'error',
+        message:
+          'Verify the properties names and their content'
       });
       return;
     }
     res.status(201).json({
-      status: "success",
+      status: 'success',
       data: {
-        productinorder,
-      },
+        productinorder
+      }
     });
   } catch (error) {
     console.log(error);
@@ -58,7 +70,13 @@ exports.updateProductInOrderPatch = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const data = filterObj(req.body, 'orderId', 'productId', 'quantity', 'price'); // { aciotns } | { action, status }
+    const data = filterObj(
+      req.body,
+      'orderId',
+      'productId',
+      'quantity',
+      'price'
+    ); // { aciotns } | { action, status }
 
     const productinorder = await Productinorder.findOne({
       where: { id: id, status: 'active' }
