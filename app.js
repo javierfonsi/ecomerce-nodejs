@@ -15,12 +15,13 @@ const app = express()
 //json 
 app.use(express.json());
 
-app.use('/api/v1/users', usersRouter);
-app.use('/api/v1/products', productRouter)
 
 //Endpoint
+app.use('/api/v1/users', usersRouter);
+app.use('/api/v1/products', productRouter)
 app.use('/api/v1/orders', ordersRouter)
 app.use('/api/v1/productsinorders', productinordersRouter)
+
 
 
 sequelize
