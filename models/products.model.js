@@ -8,19 +8,19 @@ const Product = sequelize.define('product', {
     autoIncrement: true,
     allowNull: false
   },
-  name: {
+  title: {
     type: DataTypes.STRING(50),
     allowNull: false
   },
-  price: {
-    type: DataTypes.STRING(15),
+  description: {
+    type: DataTypes.STRING,
     allowNull: false
   },
-  availableQty: {
+  quantity: {
     type: DataTypes.INTEGER,
     allowNull: false
   },
-  userId: {
+  price: {
     type: DataTypes.INTEGER,
     allowNull: false
   },
@@ -28,6 +28,10 @@ const Product = sequelize.define('product', {
     type: DataTypes.STRING(10),
     allowNull: false,
     defaultValue: 'active'
+  },
+  userId: {
+    type: DataTypes.INTEGER,
+    allowNull: false
   }
 });
 module.exports = { Product };
