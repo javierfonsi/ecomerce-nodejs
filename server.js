@@ -4,6 +4,7 @@ const { app } = require('./app');
 const { sequelize } = require('./utils/database');
 const { initModels } = require('./utils/initModels');
 
+// Database authenticated
 sequelize
   .authenticate()
   .then(() => console.log('Database authenticated'))

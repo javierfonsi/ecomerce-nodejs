@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 
 //controllers
-const { globalErrorHandler, globalErrorhandler } = require('./controllers/error.controller');
+const { globalErrorhandler } = require('./controllers/error.controller');
 
 //Routes
 const { usersRouter } = require('./routes/users.routes');
