@@ -1,7 +1,6 @@
-const { Order } = require('../models/order.model');
+const { Order } = require('../models/orders.model');
 
 const { filterObj } = require('../utils/filterObj')
-
 
 exports.getAllOrders = async (req, res) => {
   try {

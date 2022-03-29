@@ -12,10 +12,6 @@ const Cart = sequelize.define('cart', {
     type: DataTypes.INTEGER,
     allowNull: false
   },
-  totalPrice: {
-    type: DataTypes.STRING(50),
-    allowNull: false
-  },
   status: {
     type: DataTypes.STRING(10),
     allowNull: false,

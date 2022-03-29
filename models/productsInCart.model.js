@@ -21,10 +21,6 @@ const ProductsInCart = sequelize.define('productsincart', {
     type: DataTypes.INTEGER,
     allowNull: false
   },
-  price: {
-    type: DataTypes.STRING(10),
-    allowNull: false
-  },
   status: {
     type: DataTypes.STRING,
     allowNull: false,
