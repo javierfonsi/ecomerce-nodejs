@@ -2,7 +2,7 @@ const { app } = require('./app');
 
 // Utils
 const { sequelize } = require('./utils/database');
-const { initModels } = require('./utils/initialModels');
+const { initModels } = require('./utils/initModels');
 
 sequelize
   .authenticate()
@@ -13,12 +13,14 @@ sequelize
 initModels();
 
 sequelize
+  //.sync({ force: true })
   .sync()
-  .then(() => console.log('Database synced'))
+  .then(() => console.log('Database synchronized'))
   .catch((err) => console.log(err));
-
+// process.ENV.PORT
+//si port esta definida y tiene un valor  entonces el port sera igual al puerto (4000)
 const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => {
-  console.log(`Express app running on port: ${PORT}`);
+  console.log(`Express app running: ${PORT}`);
 });

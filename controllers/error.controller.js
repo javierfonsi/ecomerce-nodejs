@@ -1,5 +1,5 @@
 // err -> AppError
-const globalErrorHandler = (err, req, res, next) => {
+const globalErrorhandler = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'fail';
 
@@ -11,4 +11,4 @@ const globalErrorHandler = (err, req, res, next) => {
   });
 };
 
-module.exports = { globalErrorHandler };
+module.exports = { globalErrorhandler };

@@ -24,7 +24,7 @@ app.use(express.json());
 //Enable cors
 app.use('*', cors());
 
-//Endpoint
+//Endpoints
 app.use('/api/v1/users', usersRouter);
 app.use('/api/v1/products', productRouter);
 app.use('/api/v1/carts', cartsRouter);
@@ -33,12 +33,11 @@ app.use('/api/v1/orders', ordersRouter);
 app.use('/api/v1/productsinorders', productinordersRouter);
 
 app.use('*', (req, res, next) => {
-  next(new AppError(404, `${req.originalUrl} not found in this server.`));
+  next(new AppError (404, `${req.originalUrl} not found in this server.`));
 });
 
 // Error handler (err -> AppError)
-app.use(globalErrorHandler);
+app.use(globalErrorhandler);
 
 module.exports = { app };
 
-//const { sequelize } = require('./utils/database');

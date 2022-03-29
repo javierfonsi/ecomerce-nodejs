@@ -12,7 +12,7 @@ const Order = sequelize.define('order', {
     type: DataTypes.INTEGER,
     allowNull: false
   },
-  carId: {
+  cartId: {
     type: DataTypes.INTEGER,
     allowNull: false
   },

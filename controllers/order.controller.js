@@ -2,7 +2,6 @@ const { Order } = require('../models/orders.model');
 
 const { filterObj } = require('../utils/filterObj')
 
-
 exports.getAllOrders = async (req, res) => {
   try {
     const orders = await Order.findAll({
