@@ -10,12 +10,13 @@ const sequelize = new Sequelize({
     port:5432,
     database:process.env.DB,
     dialect:'postgres',
-    logging:false,
-    dialectOptions:{
-        ssl:{
-            require:true,
-            rejectUnauthorized:false
-        }
-    }
+    logging:false
+    //,
+    //dialectOptions:{
+    //    ssl:{
+    //        require:true,
+    //        rejectUnauthorized:false
+    //    }
+    //}
 })
 module.exports = { sequelize }
