@@ -1,35 +1,21 @@
 const express= require('express')
 
-//Model
-const { ordersRouter } = require('./routes/order.route')
-const { productinordersRouter } = require('./routes/productinorder.route')
+// Controllers
+const { globalErrorHandler } = require('./controllers/error.controller');
 
-//Util
-const { sequelize } = require('./utils/database')
+
+//Routes 
+const { productRouter } = require('./routes/products.routes');
 
 //Init express
 const app = express()
 
+app.use(express.json());
+
 //Endpoint
-app.use('/api/v1/orders', ordersRouter)
-app.use('/api/v1/productsinorders', productinordersRouter)
+app.use('/api/v1/products', productRouter)
 
+app.use(globalErrorHandler);
 
-sequelize
-    .authenticate()
-    .then(() => console.log("Database autenthicate"))
-    .catch(error => console.log(error))
-
-sequelize
-    .sync()
-    .then(() => console.log("Database sync"))
-    .catch(error => console.log(error))
-
-//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-const PORT = process.env.PORT || 4001;
-
-app.listen(PORT, () => {
-    console.log("Running server");
-})
+module.exports = { app };
 
