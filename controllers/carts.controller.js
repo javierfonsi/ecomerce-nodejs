@@ -1,17 +1,16 @@
 const { Cart } = require('../models/carts.model');
+const { AppError } = require('../utils/appError');
+const { catchAsync } = require('../utils/catchAsync');
 
-exports.getAllCart = async (req, res) => {
-  try {
+exports.getAllCart = catchAsync(async (req, res, next) => {
+ 
     const cart = await Cart.findAll({
       where: { status: 'active' }
     });
 
     if (cart.length === 0) {
-      res.status(404).json({
-        status: 'error',
-        message: 'There are not carts created until.'
-      });
-      return;
+      return next(new AppError(404, 'cart not found'));
+      
     }
     res.status(201).json({
       status: 'success',
@@ -19,25 +18,21 @@ exports.getAllCart = async (req, res) => {
         cart
       }
     });
-  } catch (error) {
-    console.log(error);
-  }
-};
+  
+});
 
-exports.getCartById = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const cart = await Cart.findOne({
-      where: { id: id, status: 'active' }
-    });
+exports.getCartById = catchAsync(async (req, res, next) => {
 
-    if (!cart) {
-      res.status(404).json({
-        status: 'error',
-        message: 'The id delivered, was not found'
-      });
-      return;
-    }
+  const { cart } = req;
+    // const { id } = req.params;
+    // const cart = await Cart.findOne({
+    //   where: { id: id, status: 'active' }
+    // });
+
+    // if (!cart) {
+    //   res.status(404)
+    //   return next(new AppError(404, 'the delivered was no found'));
+    // }
 
     res.status(200).json({
       status: 'success',
@@ -45,25 +40,20 @@ exports.getCartById = async (req, res) => {
         cart
       }
     });
-  } catch (error) {
-    console.log(error);
-  }
-};
+  
+});
 
-exports.createCart = async (req, res) => {
-  try {
+exports.addProduct = catchAsync(async (req, res, next) => {
+  
     const { userId, totalPrice } = req.body;
 
     if (!userId || !totalPrice || totalPrice.length < 1) {
-      res.status(404).json({
-        status: 'error',
-        message:
-          'verify the properties names and their content'
-      });
-      return;
+      return next(
+        new AppError(400, 'verify the properties userId and their totalPrice')
+      )
     }
 
-    const cart = await Cart.create({
+    const newCart = await Cart.create({
       userId: userId,
       totalPrice: totalPrice
     });
@@ -71,30 +61,27 @@ exports.createCart = async (req, res) => {
     res.status(201).json({
       status: 'success',
       data: {
-        cart
+        newCart
       }
     });
-  } catch (error) {
-    console.log(error);
-  }
-};
+ 
+});
 
-exports.deleteCart = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const cart = await Cart.findOne({
-      where: { id: id, status: 'active' }
-    });
-
-    if (!cart) {
-      res.status(404).json({
-        status: 'error',
-        message: `The selected id ${id} was not found, please verify it.`
-      });
-      return;
-    }
+exports.deleteCart = catchAsync(async (req, res, next) => {
+  
+    // const { id } = req.params;
+    // const cart = await Cart.findOne({
+    //   where: { id: id, status: 'active' }
+    // });
+    const { cart } = req;
+    // if (!cart) {
+    //   return next(
+    //     new AppError(400, `The selected id ${id} was not found, please verify it.`)
+    //   )
+    // }
 
     await cart.update({ status: 'deleted' });
+
     res.status(200).json({
       status: 'success',
       message: `The selected id ${id} was deleted.`,
@@ -102,19 +89,17 @@ exports.deleteCart = async (req, res) => {
         cart
       }
     });
-  } catch (error) {
-    console.log(error);
-  }
-};
+ 
+});
 
-exports.deleteCartWithOutId = async (req, res) => {
-  try {
+exports.deleteCartWithOutId = catchAsync(async (req, res, next) => {
+  // if(!cart === deleted){
+    
+  // }
     res.status(404).json({
       status: 'error',
       message:
         'There are not was selected a valid ID, please add it'
     });
-  } catch (error) {
-    console.log(error);
-  }
-};
+  
+});

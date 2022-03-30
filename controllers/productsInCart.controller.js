@@ -1,45 +1,35 @@
-const {
-  ProductsInCart
-} = require('../models/productsInCart.model');
+const { ProductsInCart } = require('../models/productsInCart.model');
+const { AppError } = require('../utils/appError');
+const { catchAsync } = require('../utils/catchAsync');
 
-exports.getAllproductInCart = async (req, res) => {
-  try {
+exports.getAllproductInCart = catchAsync(async (req, res, next) => {
+  
     const productsInCart = await ProductsInCart.findAll({
       where: { status: 'active' }
     });
 
     if (productsInCart.length === 0) {
-      res.status(200).json({
-        status: 'success',
-        message:
-          'There are not productInCart created until.'
-      });
-      return;
+      return next( new AppError(404,  'There are not productInCart created until.'))
     }
+
     res.status(201).json({
       status: 'success',
       data: {
         productsInCart
       }
     });
-  } catch (error) {
-    console.log(error);
-  }
-};
+  
+});
 
-exports.getProductsInCartById = async (req, res) => {
-  try {
+exports.getProductsInCartById = catchAsync(async (req, res, next) => {
+  
     const { id } = req.params;
     const productInCart = await ProductsInCart.findOne({
       where: { id: id, status: 'active' }
     });
 
     if (!productInCart) {
-      res.status(404).json({
-        status: 'error',
-        message: `The selected Id ${id} was not found, please verify it.`
-      });
-      return;
+      return next( new AppError(404,  `The selected Id ${id} was not found, please verify it.`))
     }
 
     res.status(200).json({
@@ -48,13 +38,10 @@ exports.getProductsInCartById = async (req, res) => {
         productInCart
       }
     });
-  } catch (error) {
-    console.log(error);
-  }
-};
+});
 
-exports.createProductInCart = async (req, res) => {
-  try {
+exports.createProductInCart = catchAsync(async (req, res) => {
+  
     const { cartId, productId, quantity, price } = req.body;
 
     if (
@@ -67,12 +54,7 @@ exports.createProductInCart = async (req, res) => {
       quantity < 1 ||
       price.length < 1
     ) {
-      res.status(404).json({
-        status: 'error',
-        message:
-          'verify the properties names and their values'
-      });
-      return;
+      return next( new AppError(404, 'verify the properties names and their values'))
     }
 
     const productInCart = await ProductsInCart.create({
@@ -88,43 +70,37 @@ exports.createProductInCart = async (req, res) => {
         productInCart
       }
     });
-  } catch (error) {
-    console.log(error);
-  }
-};
+  
+});
 
-exports.deleteProductInCart = async (req, res) => {
-  try {
+exports.deleteProductInCart = catchAsync(async (req, res, next) => {
+  
     const { id } = req.params;
     const productInCart = await ProductsInCart.findOne({
       where: { id: id, status: 'active' }
     });
 
     if (!productInCart) {
-      res.status(404).json({
-        status: 'error',
-        message: `The selected Id ${id} was not found, please verify it.`
-      });
-      return;
+      return next( new AppError(404, `The selected Id ${id} was not found, please verify it.`))
     }
     await productInCart.update({ status: 'deleted' });
+
     res.status(200).json({
       status: 'success',
-      message: `The selected id ${id} was deleted.`
+      message: `The selected id ${id} was deleted.`,
+      data: {
+        productInCart
+      }
     });
-  } catch (error) {
-    console.log(error);
-  }
-};
 
-exports.deleteProductInCartWithoutId = async (req, res) => {
-  try {
+});
+
+exports.deleteProductInCartWithoutId = catchAsync(async (req, res) => {
+
     res.status(404).json({
       status: 'error',
       message:
         'There are not was selected a valid ID, please add it'
     });
-  } catch (error) {
-    console.log(error);
-  }
-};
+
+});
