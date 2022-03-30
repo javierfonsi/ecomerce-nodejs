@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 const { User } = require('../models/users.model');
 const { AppError } = require('../utils/appError');
 const { catchAsync } = require('../utils/catchAsync');
-const { Cart } = require('../models/carts.model');
+const { Product } = require('../models/products.model');
 
 dotenv.config({ path: './config.env' });
 
@@ -85,12 +85,19 @@ exports.loginUser = catchAsync(async (req, res, next) => {
   });
 })
 
-//exports.getAllUsersProducts = catchAsync(async (req, res, next) => {
-//  const { id } = req.params
+exports.getAllUsersProducts = catchAsync(async (req, res, next) => {
+  //const { user } = req
 
-//  const allproducts = await Cart.findAll({
-//    where: {id: id, status: active}
-//  }) 
+  const allproducts = await Product.findAll({
+    where: {status: active}
+  }) 
 
-//}
-//)
+  res.status(204).json({
+    status: 'success',
+    data: {
+      allproducts
+    }
+  })
+
+}
+)
