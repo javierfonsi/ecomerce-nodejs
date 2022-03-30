@@ -86,18 +86,25 @@ exports.loginUser = catchAsync(async (req, res, next) => {
 })
 
 exports.getAllUsersProducts = catchAsync(async (req, res, next) => {
-  //const { user } = req
+  
+  const { currentUser } = req;
+  console.log(currentUser.id);
+  // const { id  } =req.params;
 
   const allproducts = await Product.findAll({
-    where: {status: active}
+    where: { userId:currentUser.id, status: 'active'}
   }) 
 
-  res.status(204).json({
+  res.status(201).json({
     status: 'success',
     data: {
       allproducts
     }
   })
+    
+    
+   
+  
 
 }
 )

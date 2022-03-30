@@ -18,6 +18,6 @@ router.post('/', createUser);
 
 router.use(validateSession)
 router.get('/', getAllUsers);
-router.get('/me', userExists, getAllUsersProducts);
+router.get('/me', getAllUsersProducts);
 
 module.exports = { usersRouter: router };
