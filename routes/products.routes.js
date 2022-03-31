@@ -20,13 +20,13 @@ const router = express.Router();
 router.use(validateSession)
 router.get('/', getAllProducts);
 
-router.post('/', createProductValidators, validateResult, createProduct);
+router.post('/', createProductValidators, validateResult, protectAccountOwner, createProduct);
 
 router.use('/:id', productExists)
       .route('/:id')
       .get(getProductById)
-      .patch(updateProductPatch)
-      .delete(deleteProduct)
+      .patch(protectAccountOwner, updateProductPatch)
+      .delete(protectAccountOwner, deleteProduct)
 
 
 module.exports = { productRouter: router };

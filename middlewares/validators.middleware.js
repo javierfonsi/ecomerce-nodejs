@@ -55,7 +55,7 @@ exports.createProductValidators = [
 // END: Products validators
 
 
-exports.validateResult = catchAsync(async (req, res, next) => {
+exports.validateResult = capgtchAsync(async (req, res, next) => {
   // Validate req.body
   const errors = validationResult(req);
 
