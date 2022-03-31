@@ -9,12 +9,15 @@ const {
   deleteProduct
 } = require('../controllers/products.controller');
 
+const { validateSession } = require('../middlewares/auth.middlewares');
+
 const { productExists } = require('../middlewares/product.middleware');
 
 const { createProductValidators, validateResult } = require('../middlewares/validators.middleware');
 
 const router = express.Router();
 
+router.use(validateSession)
 router.get('/', getAllProducts);
 
 router.post('/', createProductValidators, validateResult, createProduct);

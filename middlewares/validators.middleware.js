@@ -4,6 +4,27 @@ const { body, validationResult } = require('express-validator');
 const { AppError } = require('../utils/appError');
 const { catchAsync } = require('../utils/catchAsync');
 
+// User validators
+
+exports.createUserValidators = [
+  body('userName')
+    .isString()
+    .withMessage('userName must be a string')
+    .notEmpty()
+    .withMessage('Must provide a valid useName'),
+  body('email')
+    .isEmail()
+    .withMessage('email must be a string')
+    .notEmpty()
+    .withMessage('Must provide a valid email account'),
+  body('password')
+    .isString()
+    .withMessage('Password must be a string')
+    .notEmpty()
+    .withMessage('password must be alphanumeric values'),
+];
+// END: Products validators
+
 // Products validators
 exports.createProductValidators = [
   body('title')

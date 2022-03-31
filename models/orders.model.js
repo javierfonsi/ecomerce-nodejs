@@ -17,14 +17,14 @@ const Order = sequelize.define('order', {
     allowNull: false
   },
   issuedAt: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     allowNull: false
   },
   totalPrice: {
     type: DataTypes.INTEGER,
     allowNull: false
   },
-  active: {
+  status: {
     type: DataTypes.STRING(10),
     allowNull: false,
     defaultValue: 'active'
