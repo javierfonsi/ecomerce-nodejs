@@ -9,9 +9,9 @@ const {
   deleteProduct
 } = require('../controllers/products.controller');
 
-const { validateSession } = require('../middlewares/auth.middlewares');
+const { validateSession, protectAccountOwner } = require('../middlewares/auth.middlewares');
 
-const { productExists } = require('../middlewares/product.middleware');
+const { productExists, productOwner } = require('../middlewares/product.middleware');
 
 const { createProductValidators, validateResult } = require('../middlewares/validators.middleware');
 
@@ -25,8 +25,8 @@ router.post('/', createProductValidators, validateResult, createProduct);
 router.use('/:id', productExists)
       .route('/:id')
       .get(getProductById)
-      .patch(updateProductPatch)
-      .delete(deleteProduct)
+      .patch( productOwner, updateProductPatch)
+      .delete(protectAccountOwner, deleteProduct)
 
 
 module.exports = { productRouter: router };

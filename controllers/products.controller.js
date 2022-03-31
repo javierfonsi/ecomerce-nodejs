@@ -42,13 +42,14 @@ exports.getProductById = catchAsync(async (req, res, next) => {
 
 exports.createProduct = async (req, res, next) => {
     const { title, description, quantity, price, userId } = req.body;
-   
+   const { currentUser } = req;
+
     const newProduct = await Product.create({
       title,
       description,
       quantity,
       price,
-      userId
+      userId: currentUser.id
     });
     
     res.status(201).json({
@@ -67,7 +68,8 @@ exports.updateProductPatch = catchAsync(async (req, res, next) => {
     'title',
     'description',
     'quantity',
-    'price' 
+    'price',
+    // id: product.userId 
   );
 
   await product.update({ ...data });
