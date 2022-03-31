@@ -106,5 +106,28 @@ exports.getAllUsersProducts = catchAsync(async (req, res, next) => {
    
   
 
-}
-)
+})
+
+exports.getUserById = catchAsync(async (req, res, next) => {
+  const { user } = req;
+
+  res.status(200).json({ status: 'success', data: { user } });
+});
+
+exports.updateUser = catchAsync(async (req, res, next) => {
+  const { user } = req;
+
+  const data = filterObj(req.body, 'username', 'email');
+
+  await user.update({ ...data });
+
+  res.status(204).json({ status: 'success' });
+});
+
+exports.deleteUser = catchAsync(async (req, res, next) => {
+  const { user } = req;
+
+  await user.update({ status: 'deleted' });
+
+  res.status(204).json({ status: 'success' });
+});
