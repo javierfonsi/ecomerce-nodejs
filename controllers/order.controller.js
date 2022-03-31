@@ -1,4 +1,5 @@
 const { Order } = require('../models/orders.model');
+const { catchAsync } = require('../utils/catchAsync');
 
 const { filterObj } = require('../utils/filterObj')
 
@@ -26,36 +27,23 @@ exports.getAllOrders = async (req, res) => {
   }
 };
 
-exports.createOrder = async (req, res) => {
-  try {
-    const { totalPrice, userId } = req.body;
+exports.createOrder = catchAsync(async (req, res) => {
+  const { userId, cartId, issuedAt, totalPrice } = req.body;
 
-    if (
-      !totalPrice || !userId 
-    ) {
-      res.status(404).json({
-        status: 'error',
-        message:
-          'Verify the properties names and their content'
-      });
-      return;
+  const order = await Order.create({
+    userId: userId,
+    cartId: cartId,
+    issuedAt: issuedAt,
+    totalPrice: totalPrice,
+  });
+  
+  res.status(201).json({
+    status: 'success',
+    data: {
+      order
     }
-
-    const order = await Order.create({
-      totalPrice: totalPrice,
-      userId: userId
-    });
-    
-    res.status(201).json({
-      status: 'success',
-      data: {
-        order
-      }
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
+  });
+}) 
 
 // exports.updateOrderPatch = async (req, res) => {
 //   try {

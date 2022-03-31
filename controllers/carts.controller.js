@@ -44,18 +44,10 @@ exports.getCartById = catchAsync(async (req, res, next) => {
 });
 
 exports.addProduct = catchAsync(async (req, res, next) => {
-  
-    const { userId, totalPrice } = req.body;
-
-    if (!userId || !totalPrice || totalPrice.length < 1) {
-      return next(
-        new AppError(400, 'verify the properties userId and their totalPrice')
-      )
-    }
+    const { userId } = req.body;
 
     const newCart = await Cart.create({
       userId: userId,
-      totalPrice: totalPrice
     });
 
     res.status(201).json({
