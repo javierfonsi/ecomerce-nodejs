@@ -40,25 +40,23 @@ exports.getProductById = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.createProduct = async (req, res, next) => {
-    const { title, description, quantity, price, userId } = req.body;
-   const { currentUser } = req;
+exports.createProduct = catchAsync (async (req, res, next) => {
+  const { title, description, quantity, price} = req.body;
+ const { id } = req.currentUser;
 
-    const newProduct = await Product.create({
-      title,
-      description,
-      quantity,
-      price,
-      userId: currentUser.id
-    });
-    
-    res.status(201).json({
-      status: 'success',
-      data: {
-        newProduct
-      }
-    });  
-};
+  const newProduct = await Product.create({
+    title,
+    description,
+    quantity,
+    price,
+    userId: id
+  });
+  
+  res.status(201).json({
+    status: 'success',
+    data: { newProduct }
+  });  
+}) 
 
 exports.updateProductPatch = catchAsync(async (req, res, next) => {
   const { product } = req;

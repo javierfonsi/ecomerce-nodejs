@@ -46,10 +46,7 @@ exports.createProductValidators = [
     .isNumeric()
     .withMessage('Price must be a number')
     .custom((value) => value > 0 )
-    .withMessage('Price mayor a cero'),
-  body('userId')
-    .isNumeric({ min: 1 })
-    .withMessage('Must provide at least one user id')
+    .withMessage('Price mayor a cero')
 ];
 
 // END: Products validators

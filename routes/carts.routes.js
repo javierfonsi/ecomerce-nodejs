@@ -8,15 +8,20 @@ const {
   deleteCartWithOutId
 } = require('../controllers/carts.controller');
 
+const { validateSession } = require('../middlewares/auth.middlewares');
+
 const { cartExists } =require('../middlewares/cart.middlewares')
 
 const router = express.Router();
 
-router.get('/', getAllCart);
+
+router.use(validateSession)
+//router.get('/', getAllCart);
+router.post('/addProduct', addProduct);
+
 
 router.get('/:id', getCartById);
 
-router.post('/', addProduct);
 
 router.use('/:id', cartExists)
 
