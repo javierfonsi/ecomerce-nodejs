@@ -208,15 +208,15 @@ exports.purchase_Cart = catchAsync(async (req, res, next) => {
 
   // Update all products as purchased
   const cartPromises = cart.products.map(async (product) => {
-    await product.productsInCart.update({ status: 'purchased' });
+    await product.productsincart.update({ status: 'purchased' });
 
     // Get total price of the order
-    const productPrice = product.price * product.productsInCart.quantity;
+    const productPrice = product.price * product.productsincart.quantity;
 
     totalPrice += productPrice;
 
     // Discount the quantity from the product
-    const newQty = product.quantity - product.productsInCart.quantity;
+    const newQty = product.quantity - product.productsincart.quantity;
 
     return await product.update({ quantity: newQty });
   });
