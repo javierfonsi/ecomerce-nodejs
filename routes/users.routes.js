@@ -24,13 +24,17 @@ router.post('/login', loginUser);
 router.post('/', createUserValidators, validateResult, createUser);
 
 router.use(validateSession)
+
 router.get('/', getAllUsers);
+
 router.get('/me', getAllUsersProducts);
 
 router.get('/orders', getAllUsersOrder)
+
 router.get('/orders/:id', protectAccountOwner, getAllUsersOrderbyId)
 
 router.use('/:id', userExists)
+
 router.route('/:id').get(getUserById)
   .patch(protectAccountOwner, updateUser)
   .delete(protectAccountOwner, deleteUser);

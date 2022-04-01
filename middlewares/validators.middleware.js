@@ -51,6 +51,21 @@ exports.createProductValidators = [
 
 // END: Products validators
 
+// Cart validations
+
+exports.addProductToCartValidation = [
+  body('productId')
+    .isNumeric()
+    .withMessage('Product id must be a number')
+    .custom((value) => value > 0)
+    .withMessage('Must provide a valid id'),
+  body('quantity')
+    .isNumeric()
+    .withMessage('Quantity must be a number')
+    .custom((value) => value > 0)
+    .withMessage('Quantity must be greater than 0')
+];
+
 
 exports.validateResult = catchAsync(async (req, res, next) => {
   // Validate req.body

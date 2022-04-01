@@ -8,8 +8,10 @@ const { catchAsync } = require("../utils/catchAsync");
 exports.productExists = catchAsync(async (req, res, next) => {
   const { id } = req.params;
 
-  const product = await Product.findOne({ where: { id, status: "active" } });
-  console.log(product)
+  const product = await Product.findOne({ where: { id, status: "active" }, 
+  include: [{ model: User, attributes: { exclude: ['password'] } }]
+});
+  // console.log(product)
 
   if (!product) {
     return next(new AppError(404, "No product found with that ID"));
