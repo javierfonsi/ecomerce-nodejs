@@ -20,12 +20,13 @@ const { createUserValidators, validateResult } = require('../middlewares/validat
 
 const router = express.Router();
 
-router.post('/login', loginUser);
 router.post('/', createUserValidators, validateResult, createUser);
+router.post('/login', loginUser);
+
+router.use('/all', validateSession).get('/all', getAllUsers);
 
 router.use(validateSession)
-router.get('/', getAllUsers);
-router.get('/me', getAllUsersProducts);
+router.get('/me', getAllUsersProducts); //Por validar luego de agregar productos
 
 router.get('/orders', getAllUsersOrder)
 router.get('/orders/:id', protectAccountOwner, getAllUsersOrderbyId)

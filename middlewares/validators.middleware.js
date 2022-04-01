@@ -23,7 +23,7 @@ exports.createUserValidators = [
     .notEmpty()
     .withMessage('password must be alphanumeric values'),
 ];
-// END: Products validators
+// END: user validators
 
 // Products validators
 exports.createProductValidators = [
@@ -51,6 +51,20 @@ exports.createProductValidators = [
 
 // END: Products validators
 
+// ProductInCartValidators
+exports.addProductInCartValidation = [
+  body('productId')
+    .isNumeric()
+    .withMessage('Product id must be a number')
+    .custom((value) => value > 0)
+    .withMessage('Must provide a valid id'),
+  body('quantity')
+    .isNumeric()
+    .withMessage('Quantity must be a number')
+    .custom((value) => value > 0)
+    .withMessage('Quantity must be greater than 0')
+];
+// END: ProductInCartValidators
 
 exports.validateResult = catchAsync(async (req, res, next) => {
   // Validate req.body

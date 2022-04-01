@@ -1,4 +1,5 @@
 const express = require('express');
+const helmet = require('helmet')
 const cors = require('cors');
 
 //controllers
@@ -8,9 +9,9 @@ const { globalErrorhandler } = require('./controllers/error.controller');
 const { usersRouter } = require('./routes/users.routes');
 const { productRouter } = require('./routes/products.routes');
 const { cartsRouter } = require('./routes/carts.routes');
-const { productsincartRouter } = require('./routes/productsInCart.routes');
-const { ordersRouter } = require('./routes/order.routes');
-const { productinordersRouter } = require('./routes/productinorder.routes');
+//const { productsincartRouter } = require('./routes/productsInCart.routes');
+//const { ordersRouter } = require('./routes/order.routes');
+//const { productinordersRouter } = require('./routes/productinorder.routes');
 
 //Util
 const { AppError } = require('./utils/appError')
@@ -24,13 +25,16 @@ app.use(express.json());
 //Enable cors
 app.use('*', cors());
 
+//Enable helmet
+app.use(helmet())
+
 //Endpoints
 app.use('/api/v1/users', usersRouter);
 app.use('/api/v1/products', productRouter);
 app.use('/api/v1/carts', cartsRouter);
-app.use('/api/v1/productsincart', productsincartRouter);
-app.use('/api/v1/orders', ordersRouter);
-app.use('/api/v1/productsinorders', productinordersRouter);
+//app.use('/api/v1/productsincart', productsincartRouter);
+//app.use('/api/v1/orders', ordersRouter);
+//app.use('/api/v1/productsinorders', productinordersRouter);
 
 app.use('*', (req, res, next) => {
   next(new AppError (404, `${req.originalUrl} not found in this server.`));

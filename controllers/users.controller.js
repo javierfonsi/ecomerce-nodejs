@@ -97,43 +97,48 @@ exports.updateUser = catchAsync(async (req, res, next) => {
 
   await user.update({ ...data });
 
-  res.status(201).json({ 
+  res.status(201).json({
     status: 'success',
-    message: `The user with id ${user.id} was update correctly` });
+    message: `The user with id ${user.id} was update correctly`
   });
-  
-  exports.deleteUser = catchAsync(async (req, res, next) => {
-    const { user } = req;
-    
-    await user.update({ status: 'deleted' });
-    
-    res.status(201).json({ status: 'success',
-    message: `The user with id ${user.id} was deleted correctly` });
-  });
-  
-  exports.getAllUsersOrder = catchAsync(async (req, res, nexr) => {
-    const allOrders = await Order.findAll({
-      where: {status:'active'} // at the momment implement is needed change the status to purchased
-    }) 
-    
-    res.status(200).json({
+});
+
+exports.deleteUser = catchAsync(async (req, res, next) => {
+  const { user } = req;
+
+  await user.update({ status: 'deleted' });
+
+  res
+    .status(201)
+    .json({
       status: 'success',
-      data: {
-        allOrders
+      message: `The user with id ${user.id} was deleted correctly`
+    });
+});
+
+exports.getAllUsersOrder = catchAsync(async (req, res, nexr) => {
+  const allOrders = await Order.findAll({
+    where: { status: 'active' } // at the momment implement is needed change the status to purchased
+  });
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      allOrders
     }
-  })
-})
+  });
+});
 
 exports.getAllUsersOrderbyId = catchAsync(async (req, res, nexr) => {
-  const { currentUser } = req
+  const { currentUser } = req;
   const orders = await Order.findAll({
-    where: {id: currentUser.id, status:'active'}  // at the momment implement is needed change the status to purchased
-  }) 
-  
-   res.status(200).json({
+    where: { id: currentUser.id, status: 'active' } // at the momment implement is needed change the status to purchased
+  });
+
+  res.status(200).json({
     status: 'success',
     data: {
       orders
     }
-  })
-})
+  });
+});

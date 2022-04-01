@@ -1,4 +1,7 @@
+//models
 const { User } = require("../models/users.model");
+
+//utils
 const { AppError } = require("../utils/appError");
 const { catchAsync } = require("../utils/catchAsync");
 
@@ -6,7 +9,8 @@ exports.userExists = catchAsync(async (req, res, next) => {
     const { id } = req.params;
   
     const user = await User.findOne({
-      where: { id, status: 'active' }
+      where: { id, status: 'active' },
+      attributes: { exclude: ['password'] }
     });
   
     if (!user) {

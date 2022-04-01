@@ -1,11 +1,8 @@
-const { validationResult } = require('express-validator');
-
 //Models
 const { Product } = require('../models/products.model');
 
 // Utils
 const { catchAsync } = require('../utils/catchAsync');
-const { AppError } = require('../utils/appError');
 const { filterObj } = require('../utils/filterObj');
 
 
@@ -31,8 +28,6 @@ exports.getAllProducts = catchAsync(async (req, res, next) => {
 
 exports.getProductById = catchAsync(async (req, res, next) => {  
   const { product } = req;
-
-  console.log(req)
 
   res.status(200).json({
     status: 'success',
@@ -72,7 +67,10 @@ exports.updateProductPatch = catchAsync(async (req, res, next) => {
 
   await product.update({ ...data });
 
-  res.status(204).json({ status: 'success' });
+  res.status(201).json({ 
+    status: 'success',
+    message: `The product id ${product.id} was update correctly`
+   });
 });
 
 exports.deleteProduct = catchAsync(async (req, res, next) => {
@@ -80,5 +78,6 @@ exports.deleteProduct = catchAsync(async (req, res, next) => {
 
   await product.update({ status: 'deleted' });
 
-  res.status(204).json({ status: 'success' });
+  res.status(201).json({ status: 'success',
+  message: `The product id ${product.id} was update correctly` });
 });
