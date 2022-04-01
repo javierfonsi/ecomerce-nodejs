@@ -25,24 +25,17 @@ exports.getAllCart = catchAsync(async (req, res, next) => {
   if (cart.length === 0) {
     return next(new AppError(404, 'There are not products create in cart'));
   }
-  res.status(201).json({
-    status: 'success',
-    data: {
-      cart
-    }
-  });
-});
+
+})
 
 exports.getCartByUser = catchAsync(async (req, res, next) => {
   const { cart } = req;
 
-  res.status(200).json({
-    status: 'success',
-    data: {
-      cart
-    }
+  // Check if product to add, does not exceeds that requested amount
+  const product = await Product.findOne({
+    where: { status: 'active', id: productId }
   });
-});
+})
 
 exports.addProduct = catchAsync(async (req, res, next) => {
   const { productId, quantity } = req.body;
@@ -136,7 +129,16 @@ exports.addProduct = catchAsync(async (req, res, next) => {
     status: 'success',
     message: 'The product was add to cart correcty'
   });
+
+  if (!productInCart) {
+    return next(new AppError(404, 'This product does not exist in this cart'));
+  }
+
+  await productInCart.update({ status: 'removed', quantity: 0 });
+
+  res.status(204).json({ status: 'success' });
 });
+
 
 exports.update_cartProduct = catchAsync(async (req, res, next) => {
   const { currentUser } = req;
@@ -237,7 +239,8 @@ exports.purchase_Cart = catchAsync(async (req, res, next) => {
     status: 'success',
     data: { newOrder }
   });
-});
+
+})
 
 exports.remove_ProductFromCart = catchAsync(async (req, res, next) => {
   const { currentUser } = req;
@@ -250,6 +253,7 @@ exports.remove_ProductFromCart = catchAsync(async (req, res, next) => {
   if (!cart) {
     return next(new AppError(404, 'This user does not have a cart yet'));
   }
+  
 
   const productInCart = await ProductsInCart.findOne({
     where: { status: 'active', cartId: cart.id, productId }

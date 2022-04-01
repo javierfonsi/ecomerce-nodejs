@@ -51,8 +51,14 @@ exports.createProductValidators = [
 
 // END: Products validators
 
+<<<<<<< HEAD
 // ProductInCartValidators
 exports.addProductInCartValidation = [
+=======
+// Cart validations
+
+exports.addProductToCartValidation = [
+>>>>>>> daa12f0412f0c7c49069f62c2c0c4542ab5c961c
   body('productId')
     .isNumeric()
     .withMessage('Product id must be a number')
@@ -64,7 +70,11 @@ exports.addProductInCartValidation = [
     .custom((value) => value > 0)
     .withMessage('Quantity must be greater than 0')
 ];
+<<<<<<< HEAD
 // END: ProductInCartValidators
+=======
+
+>>>>>>> daa12f0412f0c7c49069f62c2c0c4542ab5c961c
 
 exports.validateResult = catchAsync(async (req, res, next) => {
   // Validate req.body

@@ -1,5 +1,6 @@
 //Models
 const { Product } = require('../models/products.model');
+const { User } = require('../models/users.model');
 
 // Utils
 const { catchAsync } = require('../utils/catchAsync');
@@ -8,16 +9,17 @@ const { filterObj } = require('../utils/filterObj');
 
 exports.getAllProducts = catchAsync(async (req, res, next) => {
     const products = await Product.findAll({
-      where: { status: 'active' }
+      where: { status: 'active' },
+      include: [{ model: User, attributes: { exclude: ['password'] } }]
     });
 
-    if (products.length === 0) {
-      res.status(404).json({
-        status: 'error',
-        message: 'there are not products created until.'
-      });
-      return;
-    }
+    // if (products.length === 0) {
+    //   res.status(404).json({
+    //     status: 'error',
+    //     message: 'there are not products created until.'
+    //   });
+    //   return;
+    // }
     res.status(201).json({
       status: 'success',
       data: {

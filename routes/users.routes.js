@@ -29,9 +29,11 @@ router.use(validateSession)
 router.get('/me', getAllUsersProducts); //Por validar luego de agregar productos
 
 router.get('/orders', getAllUsersOrder)
+
 router.get('/orders/:id', protectAccountOwner, getAllUsersOrderbyId)
 
 router.use('/:id', userExists)
+
 router.route('/:id').get(getUserById)
   .patch(protectAccountOwner, updateUser)
   .delete(protectAccountOwner, deleteUser);

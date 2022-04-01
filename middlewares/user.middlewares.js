@@ -20,3 +20,14 @@ exports.userExists = catchAsync(async (req, res, next) => {
     req.user = user;
     next();
   });
+
+  // exports.protectUserAccount = catchAsync(async (req, res, next) => {
+  //   const { id } = req.params;
+  //   const { currentUser } = req;
+  
+  //   if (+id !== currentUser.id) {
+  //     return next(new AppError(403, 'You do not own this account'));
+  //   }
+  
+  //   next();
+  // });

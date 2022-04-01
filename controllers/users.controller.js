@@ -3,17 +3,20 @@ const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 
 const { User } = require('../models/users.model');
+const { Order } = require('../models/orders.model');
+const { Product } = require('../models/products.model');
+
 const { AppError } = require('../utils/appError');
 const { catchAsync } = require('../utils/catchAsync');
-const { Product } = require('../models/products.model');
 const { filterObj } = require('../utils/filterObj');
-const { Order } = require('../models/orders.model');
 
 dotenv.config({ path: './config.env' });
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
   const users = await User.findAll({
+    attributes: { exclude: ['password'] },
     where: { status: 'active' }
+
   });
 
   res.status(201).json({
@@ -27,6 +30,7 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
 exports.createUser = catchAsync(async (req, res, next) => {
   const { userName, email, password } = req.body;
 
+  // const salt = await bcrypt.genSalt(12);
   let passwordHash = await bcryptjs.hash(password, 8);
   const user = await User.create({
     userName: userName,
@@ -35,6 +39,7 @@ exports.createUser = catchAsync(async (req, res, next) => {
   });
 
   user.password = undefined;
+
   res.status(201).json({
     status: 'success',
     data: {
@@ -71,7 +76,7 @@ exports.loginUser = catchAsync(async (req, res, next) => {
 
 exports.getAllUsersProducts = catchAsync(async (req, res, next) => {
   const { currentUser } = req;
-  console.log(currentUser.id);
+  // console.log(currentUser.id);
   // const { id  } =req.params;
 
   const allproducts = await Product.findAll({
