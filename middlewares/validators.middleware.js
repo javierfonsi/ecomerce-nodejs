@@ -21,7 +21,7 @@ exports.createUserValidators = [
     .isString()
     .withMessage('Password must be a string')
     .notEmpty()
-    .withMessage('password must be alphanumeric values'),
+    .withMessage('password must be alphanumeric values')
 ];
 // END: user validators
 
@@ -40,12 +40,12 @@ exports.createProductValidators = [
   body('quantity')
     .isNumeric()
     .withMessage('Quantity must be a number')
-    .custom((value) => value > 0 )
+    .custom((value) => value > 0)
     .withMessage('Quantity mayor a cero'),
-    body('price')
+  body('price')
     .isNumeric()
     .withMessage('Price must be a number')
-    .custom((value) => value > 0 )
+    .custom((value) => value > 0)
     .withMessage('Price mayor a cero')
 ];
 

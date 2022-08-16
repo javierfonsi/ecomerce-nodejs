@@ -16,7 +16,6 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
   const users = await User.findAll({
     attributes: { exclude: ['password'] },
     where: { status: 'active' }
-
   });
 
   res.status(201).json({
@@ -113,12 +112,10 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
 
   await user.update({ status: 'deleted' });
 
-  res
-    .status(201)
-    .json({
-      status: 'success',
-      message: `The user with id ${user.id} was deleted correctly`
-    });
+  res.status(201).json({
+    status: 'success',
+    message: `The user with id ${user.id} was deleted correctly`
+  });
 });
 
 exports.getAllUsersOrder = catchAsync(async (req, res, nexr) => {

@@ -10,13 +10,14 @@ const sequelize = new Sequelize({
     port:5432,
     database:process.env.DB,
     dialect:'postgres',
-    logging:false
-    ,
-    dialectOptions:{
-        ssl:{
-            require:true,
-            rejectUnauthorized:false
-        }
-    }
+    logging:false,
+    dialectOptions: // realizado con ternario ? take : {visu}
+        process.env.NODE_ENV === 'production' 
+        ? {
+            ssl:{
+                require:true,
+                rejectUnauthorized:false
+            }
+        } :  {}
 })
 module.exports = { sequelize }
