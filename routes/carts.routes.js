@@ -45,8 +45,40 @@ const {
 // Middleware
 const { validateSession } = require('../middlewares/auth.middlewares');
 
-const { cartExists } =require('../middlewares/cart.middlewares');
+const { cartExists } = require('../middlewares/cart.middlewares');
 const { validateResult, addProductInCartValidation } = require('../middlewares/validators.middleware');
+
+//order schema
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *     order:
+ *        type: object
+ *        properties:
+ *          userId:
+ *              type: integer
+ *              description: This field must be id user
+ *          cartId:
+ *              type: integer
+ *              description: According to id cart
+ *          issueAt:
+ *              type: string
+ *              description: date from purshace
+ *          totalPrice:
+ *              type: integer
+ *              description: total price products from cart
+ *        required:
+ *          - userId
+ *          - cartId
+ *          - issueAt
+ *          - totalPrice
+ *        example:
+ *          userId: 1
+ *          cartId: 1
+ *          issueAt: 03/11/2021
+ *          totalPrice: 100
+ */
 
 const router = express.Router();
 

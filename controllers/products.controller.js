@@ -12,13 +12,6 @@ exports.getAllProducts = catchAsync(async (req, res, next) => {
     include: [{ model: User, attributes: { exclude: ['password'] } }]
   });
 
-  // if (products.length === 0) {
-  //   res.status(404).json({
-  //     status: 'error',
-  //     message: 'there are not products created until.'
-  //   });
-  //   return;
-  // }
   res.status(201).json({
     status: 'success',
     data: {

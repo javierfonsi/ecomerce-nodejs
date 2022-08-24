@@ -9,9 +9,9 @@ const { catchAsync } = require('../utils/catchAsync');
 exports.createUserValidators = [
   body('userName')
     .isString()
-    .withMessage('userName must be a string')
+    .withMessage('The property must be userName and contain a string')
     .notEmpty()
-    .withMessage('Must provide a valid useName'),
+    .withMessage('Must provide a valid userName'),
   body('email')
     .isEmail()
     .withMessage('email must be a string')
@@ -19,9 +19,9 @@ exports.createUserValidators = [
     .withMessage('Must provide a valid email account'),
   body('password')
     .isString()
-    .withMessage('Password must be a string')
+    .withMessage('password must be a string')
     .notEmpty()
-    .withMessage('password must be alphanumeric values')
+    .withMessage('Password must be alphanumeric values')
 ];
 // END: user validators
 
@@ -41,12 +41,12 @@ exports.createProductValidators = [
     .isNumeric()
     .withMessage('Quantity must be a number')
     .custom((value) => value > 0)
-    .withMessage('Quantity mayor a cero'),
+    .withMessage('Quantity mayor to cero'),
   body('price')
     .isNumeric()
     .withMessage('Price must be a number')
     .custom((value) => value > 0)
-    .withMessage('Price mayor a cero')
+    .withMessage('Price mayor to cero')
 ];
 
 // END: Products validators

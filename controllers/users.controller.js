@@ -12,20 +12,6 @@ const { filterObj } = require('../utils/filterObj');
 
 dotenv.config({ path: './config.env' });
 
-exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await User.findAll({
-    attributes: { exclude: ['password'] },
-    where: { status: 'active' }
-  });
-
-  res.status(201).json({
-    status: 'success',
-    data: {
-      users
-    }
-  });
-});
-
 exports.createUser = catchAsync(async (req, res, next) => {
   const { userName, email, password } = req.body;
 
@@ -73,6 +59,20 @@ exports.loginUser = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getAllUsers = catchAsync(async (req, res, next) => {
+  const users = await User.findAll({
+    attributes: { exclude: ['password'] },
+    where: { status: 'active' }
+  });
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      users
+    }
+  });
+});
+
 exports.getAllUsersProducts = catchAsync(async (req, res, next) => {
   const { currentUser } = req;
   // console.log(currentUser.id);
@@ -82,9 +82,36 @@ exports.getAllUsersProducts = catchAsync(async (req, res, next) => {
     where: { userId: currentUser.id, status: 'active' }
   });
 
-  res.status(201).json({
+  res.status(200).json({
     status: 'success',
     data: { allproducts }
+  });
+});
+
+exports.getAllUsersOrder = catchAsync(async (req, res, nexr) => {
+  const allOrders = await Order.findAll({
+    where: { status: 'active' } // at the momment implement is needed change the status to purchased
+  });
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      allOrders
+    }
+  });
+});
+
+exports.getAllUsersOrderbyId = catchAsync(async (req, res, nexr) => {
+  const { currentUser } = req;
+  const orders = await Order.findAll({
+    where: { id: currentUser.id, status: 'active' } // at the momment implement is needed change the status to purchased
+  });
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      orders
+    }
   });
 });
 
@@ -118,29 +145,5 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getAllUsersOrder = catchAsync(async (req, res, nexr) => {
-  const allOrders = await Order.findAll({
-    where: { status: 'active' } // at the momment implement is needed change the status to purchased
-  });
 
-  res.status(200).json({
-    status: 'success',
-    data: {
-      allOrders
-    }
-  });
-});
 
-exports.getAllUsersOrderbyId = catchAsync(async (req, res, nexr) => {
-  const { currentUser } = req;
-  const orders = await Order.findAll({
-    where: { id: currentUser.id, status: 'active' } // at the momment implement is needed change the status to purchased
-  });
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      orders
-    }
-  });
-});
